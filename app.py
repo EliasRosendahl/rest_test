@@ -1,12 +1,18 @@
-from flask import Flask, request, abort
+from flask import Flask, request, abort, Blueprint
+
+
+bp = Blueprint('frontend', __name__)
+
+
+@bp.route("/")
+def index():
+    return "ok"
+
 
 def create_app(config=None):
     app = Flask(__name__)
-
-
-@app.route("/")
-def index():
-    return "ok"
+    app.register_blueprint(bp)
+    return app
 
 
 if __name__ == "__main__":
