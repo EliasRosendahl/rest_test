@@ -1,17 +1,17 @@
-import os
-import pytest
+import unittest
 
 import app
 
 
-@pytest.fixture
-def client():
-    client = app.create_app()
-    return client.test_client()
+class test_rest(unittest.TestCase):
+    def setUp(self):
+        client = app.create_app()
+        self.client = client.test_client()
 
+    def test_ok_status(self):
+        res = self.client.get("/")
+        self.assertEqual(res.status_code, 200)
+        self.assertEqual(b"ok" in res.data, True)
 
-def test_simple(client):
-    res = client.get("/")
-    assert res.status_code == 200
-    assert b"ok" in res.data
- 
+if __name__ == "__main__":
+    unittest.main()
